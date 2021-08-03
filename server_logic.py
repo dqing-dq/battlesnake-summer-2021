@@ -43,7 +43,7 @@ def avoid_walls(my_head: Dict[str, int], possible_moves: List[str])-> List[str]:
     elif my_head["y"] == 10:
         possible_moves.remove("up")
 
-  return possible_moves
+    return possible_moves
 
 
 def choose_move(data: dict) -> str:
