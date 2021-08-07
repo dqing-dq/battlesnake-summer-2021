@@ -1,13 +1,29 @@
 import random
 from typing import List, Dict
 
+import aStar
+
 """
 This file can be a nice home for your move logic, and to write helper functions.
 
-We have started this for you, with a function to help remove the 'neck' direction
-from the list of possible moves!
 """
+def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
+    closestFoodSoFar = None
+    closestPathSoFar = []
+    for food in data["food"]:
+      path = aStar.astar_search(map, (my_head["x"], my_head["y"]), (food["x"], food["y"]))
 
+      if len(path) < len(closestPathSoFar):
+        closestFoodSoFar = food
+        closestPathSoFar = path
+    
+    #coordToMove(my_head, closestPath)
+    
+    return 0;
+
+#todo
+def coordToMove(my_head: Dict[str, int], destination: Dict[str, int]) -> str:
+  return "up"
 
 def avoid_my_neck(my_head: Dict[str, int], my_body: List[dict], possible_moves: List[str]) -> List[str]:
     """
