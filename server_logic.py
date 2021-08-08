@@ -14,6 +14,8 @@ def boardToMap(data: dict):
     for body in snakes:
       newMap[body["x"]][body["y"]] = "#"
 
+  return newMap
+
 
 def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
     closestPathSoFar = []
