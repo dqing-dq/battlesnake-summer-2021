@@ -13,8 +13,6 @@ def boardToMap(data: dict):
   for snakes in data["snakes"]:
     for body in snakes:
       newMap[body["x"]][body["y"]] = "#"
-  
-  for 
 
 
 def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
@@ -29,7 +27,15 @@ def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
 
 #todo
 def coordToMove(my_head: Dict[str, int], destination: Dict[str, int]) -> str:
-  return "up"
+   if destination["x"] < my_head["x"]:
+    return "left"  # my destination is left of my head
+
+   elif destination["x"] > my_head["x"]:
+      return "right"  # my destination is right of my head
+    elif my_neck["y"] < my_head["y"]:
+      return "down"  # my destination is below my head
+    elif my_neck["y"] > my_head["y"]:
+      return "up"  # my destination is above my head
 
 def avoid_my_neck(my_head: Dict[str, int], my_body: List[dict], possible_moves: List[str]) -> List[str]:
     """
