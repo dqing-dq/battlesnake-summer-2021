@@ -7,19 +7,25 @@ import aStar
 This file can be a nice home for your move logic, and to write helper functions.
 
 """
+def boardToMap(data: dict):
+  newMap = [["." for x in range(11)] for y in range(11)]
+
+  for snakes in data["snakes"]:
+    for body in snakes:
+      newMap[body["x"]][body["y"]] = "#"
+  
+  for 
+
+
 def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
-    closestFoodSoFar = None
     closestPathSoFar = []
     for food in data["food"]:
       path = aStar.astar_search(map, (my_head["x"], my_head["y"]), (food["x"], food["y"]))
 
       if len(path) < len(closestPathSoFar):
-        closestFoodSoFar = food
         closestPathSoFar = path
     
-    #coordToMove(my_head, closestPath)
-    
-    return 0;
+    return coordToMove(my_head, closestPathSoFar[0])
 
 #todo
 def coordToMove(my_head: Dict[str, int], destination: Dict[str, int]) -> str:
