@@ -20,14 +20,19 @@ def boardToMap(data: dict):
     for body in snakes:
       newMap[body["x"] + 1][body["y"] + 1] = "#"
 
+
+
   return newMap
 
 
 def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
     closestPathSoFar = []
     modifiedMap = boardToMap(data)
+    modifiedMap[my_head["x"] + 1][my_head["y"] + 1] = "@"
+    
 
     for food in data["food"]:
+      modifiedMap[food["x"] + 1][food["y"] + 1] = "$"
       path = aStar.astar_search(modifiedMap, (my_head["x"] + 1, my_head["y"] + 1), (food["x"] + 1, food["y"] + 1))
 
       if len(path) < len(closestPathSoFar):
