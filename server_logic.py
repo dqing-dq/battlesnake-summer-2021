@@ -34,9 +34,9 @@ def coordToMove(my_head: Dict[str, int], destination: Dict[str, int]) -> str:
 
    elif destination["x"] > my_head["x"]:
       return "right"  # my destination is right of my head
-    elif destination["y"] < my_head["y"]:
+   elif destination["y"] < my_head["y"]:
       return "down"  # my destination is below my head
-    elif destination["y"] > my_head["y"]:
+   elif destination["y"] > my_head["y"]:
       return "up"  # my destination is above my head
 
 def avoid_my_neck(my_head: Dict[str, int], my_body: List[dict], possible_moves: List[str]) -> List[str]:
