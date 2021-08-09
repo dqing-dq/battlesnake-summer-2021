@@ -130,7 +130,7 @@ def choose_move(data: dict) -> str:
     move = random.choice(possible_moves)
     # TODO: Explore new strategies for picking a move that are better than random
 
-    closestFoodMove = findClosestFood(my_head, my_body, data)
+    closestFoodMove = findClosestFood(my_head, data)
 
     if (checkMove(possible_moves, closestFoodMove)):
       return move
