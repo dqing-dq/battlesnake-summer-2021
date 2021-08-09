@@ -51,29 +51,36 @@ def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
 
 #todo
 def coordToMove(my_head: Dict[str, int], destination: Dict[str, int]) -> str:
+
+  print("head coord")
+  print(my_head)
+  print("dest coord")
+  print(destination)
+
   xDiff = my_head["x"] - destination["x"]
   yDiff = my_head["y"] - destination["y"]
 
   if xDiff == 0:
     if yDiff == 1:
+      print("d")
       return "down"
     elif yDiff == -1:
+      print("u")
       return "up"
     else:
       print("Tried to call coordToMove with not adjacent block")
   
   if yDiff == 0:
     if xDiff == 1:
+      print("l")
       return "left"
     elif xDiff == -1:
+      print("r")
       return "right"
   
 
   print("Tried to call coordToMove with not adjacent block")
-  print("head coord")
-  print(my_head)
-  print("dest coord")
-  print(destination)
+  
 
 
   '''if destination["x"] < my_head["x"]:
@@ -127,6 +134,9 @@ def checkMove(possible_moves, move):
   for pmove in possible_moves:
     if pmove == move:
       return True
+
+  print("move not possible")
+  print(pmove)
   return False
 
 def choose_move(data: dict) -> str:
@@ -173,7 +183,7 @@ def choose_move(data: dict) -> str:
     closestFoodMove = findClosestFood(my_head, data)
 
     if (checkMove(possible_moves, closestFoodMove)):
-      return move
+      return closestFoodMove
 
 
     print(f"{data['game']['id']} MOVE {data['turn']}: {move} picked from all valid options in {possible_moves}")
