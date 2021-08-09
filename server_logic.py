@@ -8,36 +8,43 @@ This file can be a nice home for your move logic, and to write helper functions.
 
 """
 def boardToMap(data: dict):
-  newMap = [["." for x in range(13)] for y in range(13)]
+  map = {}
 
   for x in range(13):
-    newMap[x][0] = "#"
-    newMap[x][12] = "#"
-    newMap[0][x] = "#"
-    newMap[12][x] = "#"
+    for y in range(13):
+      map[(x, y)] = "."
 
-  for snakes in data["snakes"]:
-    for body in snakes:
-      newMap[body["x"] + 1][body["y"] + 1] = "#"
+  for x in range(13):
+    map[(x, 0)]= "#"
+    map[(x, 12)] = "#"
+    map[(0, x)] = "#"
+    map[(12,x)] = "#"
 
+  for snakes in data["board"]["snakes"]:
+    for body in snakes["body"]:
+      print(body["x"], body["y"])
+      map[(body["x"] + 1, body["y"] + 1)] = "#"
 
-
-  return newMap
+  return map
 
 
 def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
     closestPathSoFar = []
+    dist = 500
     modifiedMap = boardToMap(data)
-    modifiedMap[my_head["x"] + 1][my_head["y"] + 1] = "@"
+    modifiedMap[(my_head["x"] + 1, my_head["y"] + 1)] = "@"
     
 
-    for food in data["food"]:
-      modifiedMap[food["x"] + 1][food["y"] + 1] = "$"
-      path = aStar.astar_search(modifiedMap, (my_head["x"] + 1, my_head["y"] + 1), (food["x"] + 1, food["y"] + 1))
+    for food in data["board"]["food"]:
+      mapCopy = modifiedMap
+      mapCopy[(food["x"] + 1, food["y"] + 1)] = "$"
+      path = aStar.astar_search(mapCopy, (my_head["x"] + 1, my_head["y"] + 1), (food["x"] + 1, food["y"] + 1))
 
-      if len(path) < len(closestPathSoFar):
+      if len(path) < dist:
         closestPathSoFar = path
-    
+        dist = len(path)
+    print("path")
+    print(closestPathSoFar)
     return coordToMove(my_head, closestPathSoFar[0])
 
 #todo
