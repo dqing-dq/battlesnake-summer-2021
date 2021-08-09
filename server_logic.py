@@ -44,7 +44,7 @@ def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
         dist = len(path)
     print("path")
     print(closestPathSoFar)
-    firstMove = {"x": closestPathSoFar[0][0], "y": closestPathSoFar[0][1]}
+    firstMove = {"x": closestPathSoFar[0][0] - 1, "y": closestPathSoFar[0][1] - 1}
     return coordToMove(my_head, firstMove)
 
 #todo
