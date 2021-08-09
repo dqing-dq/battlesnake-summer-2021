@@ -8,19 +8,27 @@ This file can be a nice home for your move logic, and to write helper functions.
 
 """
 def boardToMap(data: dict):
-  newMap = [["." for x in range(11)] for y in range(11)]
+  newMap = [["." for x in range(13)] for y in range(13)]
+
+  for x in range(13):
+    newMap[x][0] = "#"
+    newMap[x][12] = "#"
+    newMap[0][x] = "#"
+    newMap[12][x] = "#"
 
   for snakes in data["snakes"]:
     for body in snakes:
-      newMap[body["x"]][body["y"]] = "#"
+      newMap[body["x"] + 1][body["y"] + 1] = "#"
 
   return newMap
 
 
 def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
     closestPathSoFar = []
+    modifiedMap = boardToMap(data)
+
     for food in data["food"]:
-      path = aStar.astar_search(map, (my_head["x"], my_head["y"]), (food["x"], food["y"]))
+      path = aStar.astar_search(modifiedMap, (my_head["x"] + 1, my_head["y"] + 1), (food["x"] + 1, food["y"] + 1))
 
       if len(path) < len(closestPathSoFar):
         closestPathSoFar = path
@@ -75,6 +83,11 @@ def avoid_walls(my_head: Dict[str, int], possible_moves: List[str])-> List[str]:
 
     return possible_moves
 
+def checkMove(possible_moves, move):
+  for pmove in possible_moves:
+    if pmove == move:
+      return True
+  return False
 
 def choose_move(data: dict) -> str:
     """
@@ -116,6 +129,12 @@ def choose_move(data: dict) -> str:
     # Choose a random direction from the remaining possible_moves to move in, and then return that move
     move = random.choice(possible_moves)
     # TODO: Explore new strategies for picking a move that are better than random
+
+    closestFoodMove = findClosestFood(my_head, my_body, data)
+
+    if (checkMove(possible_moves, closestFoodMove)):
+      return move
+
 
     print(f"{data['game']['id']} MOVE {data['turn']}: {move} picked from all valid options in {possible_moves}")
 
