@@ -18,7 +18,7 @@ def boardToMap(data: dict):
     map[(x, 0)]= "#"
     map[(x, 12)] = "#"
     map[(0, x)] = "#"
-    map[(12,x)] = "#"
+    map[(12, x)] = "#"
 
   for snakes in data["board"]["snakes"]:
     for body in snakes["body"]:
@@ -45,11 +45,38 @@ def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
     print("path")
     print(closestPathSoFar)
     firstMove = {"x": closestPathSoFar[0][0] - 1, "y": closestPathSoFar[0][1] - 1}
+    print("firstMove")
+    print(firstMove)
     return coordToMove(my_head, firstMove)
 
 #todo
 def coordToMove(my_head: Dict[str, int], destination: Dict[str, int]) -> str:
-   if destination["x"] < my_head["x"]:
+  xDiff = my_head["x"] - destination["x"]
+  yDiff = my_head["y"] - destination["y"]
+
+  if xDiff == 0:
+    if yDiff == 1:
+      return "down"
+    elif yDiff == -1:
+      return "up"
+    else:
+      print("Tried to call coordToMove with not adjacent block")
+  
+  if yDiff == 0:
+    if xDiff == 1:
+      return "left"
+    elif xDiff == -1:
+      return "right"
+  
+
+  print("Tried to call coordToMove with not adjacent block")
+  print("head coord")
+  print(my_head)
+  print("dest coord")
+  print(destination)
+
+
+  '''if destination["x"] < my_head["x"]:
     return "left"  # my destination is left of my head
 
    elif destination["x"] > my_head["x"]:
@@ -58,6 +85,7 @@ def coordToMove(my_head: Dict[str, int], destination: Dict[str, int]) -> str:
       return "down"  # my destination is below my head
    elif destination["y"] > my_head["y"]:
       return "up"  # my destination is above my head
+  '''
 
 def avoid_my_neck(my_head: Dict[str, int], my_body: List[dict], possible_moves: List[str]) -> List[str]:
     """
