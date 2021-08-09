@@ -22,7 +22,6 @@ def boardToMap(data: dict):
 
   for snakes in data["board"]["snakes"]:
     for body in snakes["body"]:
-      print(body["x"], body["y"])
       map[(body["x"] + 1, body["y"] + 1)] = "#"
 
   return map
@@ -45,7 +44,8 @@ def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
         dist = len(path)
     print("path")
     print(closestPathSoFar)
-    return coordToMove(my_head, closestPathSoFar[0])
+    firstMove = {"x": closestPathSoFar[0][0], "y": closestPathSoFar[0][1]}
+    return coordToMove(my_head, firstMove)
 
 #todo
 def coordToMove(my_head: Dict[str, int], destination: Dict[str, int]) -> str:
