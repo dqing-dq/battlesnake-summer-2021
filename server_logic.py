@@ -24,8 +24,30 @@ def boardToMap(data: dict):
     for body in snakes["body"]:
       map[(body["x"] + 1, body["y"] + 1)] = "#"
 
+  map = add_snake_tail(data, map)
+  map = remove_snake_head_next_possible_locations(data, map)
+
   return map
 
+def add_snake_tail(data: dict, map):
+  for snake in data['board']['snakes']:
+    # Add last unit in each snake as possible move because it is likely empty after Move.
+    tail = snake['body'][-1]
+    map[(tail["x"] + 1, tail["y"] + 1)] = "."
+  return map
+
+def remove_snake_head_next_possible_locations(data: dict, map):
+  for snake in data['board']['snakes']:
+    if (snake['id'] != data['you']['id']):
+      head = snake['head']
+      head["x"] = head["x"] + 1
+      head["y"] = head["y"] + 1
+      print(f"SNAKE: {snake['name']} HEAD: {head}")
+      map[(head["x"], head["y"] + 1)] = "#"
+      map[(head["x"], head["y"] - 1)] = "#"
+      map[(head["x"] + 1, head["y"])] = "#"
+      map[(head["x"] - 1, head["y"])] = "#"
+  return map
 
 def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
     closestPathSoFar = []
