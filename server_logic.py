@@ -61,9 +61,13 @@ def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
       mapCopy[(food["x"] + 1, food["y"] + 1)] = "$"
       path = aStar.astar_search(mapCopy, (my_head["x"] + 1, my_head["y"] + 1), (food["x"] + 1, food["y"] + 1))
 
-      if len(path) < dist:
+      if path != None and len(path) < dist:
         closestPathSoFar = path
         dist = len(path)
+
+    if dist == 500:
+      return None
+
     print("path")
     print(closestPathSoFar)
     firstMove = {"x": closestPathSoFar[0][0] - 1, "y": closestPathSoFar[0][1] - 1}
@@ -71,7 +75,6 @@ def findClosestFood(my_head: Dict[str, int], data: dict) -> str:
     print(firstMove)
     return coordToMove(my_head, firstMove)
 
-#todo
 def coordToMove(my_head: Dict[str, int], destination: Dict[str, int]) -> str:
 
   print("head coord")
@@ -203,6 +206,9 @@ def choose_move(data: dict) -> str:
     # TODO: Explore new strategies for picking a move that are better than random
 
     closestFoodMove = findClosestFood(my_head, data)
+
+    if closestFoodMove == None:
+      return move
 
     if (checkMove(possible_moves, closestFoodMove)):
       return closestFoodMove
